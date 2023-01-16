@@ -11,12 +11,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class BuyingTest {
 
     private WebDriver driver;
+    public Logging logger = new Logging();
 
     @Given("browser on loggin in page")
     public void browserOnLoggingInPage() {
@@ -27,12 +31,14 @@ public class BuyingTest {
 
     @When("user logs in and goes to the clothes section")
     public void userLogsIn() {
-        WebElement emailBracket = driver.findElement(By.xpath("//*[@id=\"field-email\"]"));
-        emailBracket.sendKeys("sesixag720@kaftee.com");
-        WebElement passwordBracket = driver.findElement(By.xpath("//*[@id=\"field-password\"]"));
-        passwordBracket.sendKeys("qwerty");
-        WebElement signIn = driver.findElement(By.cssSelector("#submit-login"));
-        signIn.click();
+
+        logger.loggingIn(driver);
+//        WebElement emailBracket = driver.findElement(By.xpath("//*[@id=\"field-email\"]"));
+//        emailBracket.sendKeys("sesixag720@kaftee.com");
+//        WebElement passwordBracket = driver.findElement(By.xpath("//*[@id=\"field-password\"]"));
+//        passwordBracket.sendKeys("qwerty");
+//        WebElement signIn = driver.findElement(By.cssSelector("#submit-login"));
+//        signIn.click();
         WebElement clothesButton = driver.findElement(By.xpath("//*[@id=\"category-3\"]/a"));
         clothesButton.click();
     }
@@ -87,8 +93,12 @@ public class BuyingTest {
 
     @And("User sees order confirmation")
     public void userSeesOrderConfirmation() throws IOException {
+        Date date = new Date();
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        String s = formatter.format(date);
+        String screenshot_name = s + "_" + "screenshot.png";
         File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(scrFile, new File("c:\\temp\\screenshot1.png"));
+        FileUtils.copyFile(scrFile, new File("C:\\Users\\Sebek\\WarsztatyZadanie\\Zadanie1\\untitled1\\" + screenshot_name));
         String orderCode = driver.findElement(By.xpath("//*[@id=\"order-reference-value\"]")).getText();
         String orderPrice = driver.findElement(By.xpath("//*[@id=\"content-hook_payment_return\"]/div/div/div/ul/li[1]/span/strong")).getText();
         driver.findElement(By.xpath("//*[@id=\"_desktop_user_info\"]/div/a[2]/span")).click();

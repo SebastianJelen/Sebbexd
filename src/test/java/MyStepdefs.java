@@ -14,6 +14,7 @@ import java.time.Duration;
 public class MyStepdefs {
 
     private WebDriver driver;
+    public Logging logger = new Logging();
 
 
     @Given("browser on logging in page")
@@ -26,12 +27,7 @@ public class MyStepdefs {
     @When("User logs in")
     public void userLogsIn() {
 
-        WebElement emailBracket = driver.findElement(By.xpath("//*[@id=\"field-email\"]"));
-        emailBracket.sendKeys("sesixag720@kaftee.com");
-        WebElement passwordBracket = driver.findElement(By.xpath("//*[@id=\"field-password\"]"));
-        passwordBracket.sendKeys("qwerty");
-        WebElement signIn = driver.findElement(By.cssSelector("#submit-login"));
-        signIn.click();
+        logger.loggingIn(driver);
 
     }
 
