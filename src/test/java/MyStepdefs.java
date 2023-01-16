@@ -61,11 +61,17 @@ public class MyStepdefs {
         Assertions.assertEquals(City, currentCityAddress);
         WebElement saveButton1 = driver.findElement(By.xpath("//*[@id=\"content\"]/div/div/form/footer/button"));
         saveButton1.click();
+//        String currentAddress = driver.findElement(By.xpath("/html/body/main/section/div/div/section/section/div/div/form/section/div[6]/div[1]/input")).getText();
+ //       Assertions.assertEquals(Address, currentAddress);
         WebElement deleteButton = driver.findElement(By.xpath("/html/body/main/section/div/div/section/section/div[2]/article/div[2]/a[2]/span"));
         deleteButton.click();
+//         Assertions.assertEquals(ZipPostalCode, ZipPostalCode);
         String messageDeletedAccount = driver.findElement(By.xpath("//*[@id=\"notifications\"]/div/article/ul/li")).getText();
         Assertions.assertEquals(messageDeletedAccount, "Address successfully deleted!");
-
+ //      String postalCheck = driver.findElement(By.xpath("//*[@id=\"field-postcode\"]")).getText();
+      //   Assertions.assertEquals(ZipPostalCode, 32150);
+   //     saveButton.click();
+        int x = 1;
 
 
 
