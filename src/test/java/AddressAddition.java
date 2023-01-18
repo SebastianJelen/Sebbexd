@@ -56,7 +56,7 @@ public class AddressAddition {
         saveButton.click();
         WebElement updateButton = driver.findElement(By.xpath("/html/body/main/section/div/div/section/section/div[2]/article/div[2]/a[1]/span"));
         updateButton.click();
-        // sprawdzanie asercji
+        // sprawdzenie poprawnosci dodanego adresu
         String currentCityAddress = driver.findElement(By.xpath("/html/body/main/section/div/div/section/section/div/div/form/section/div[8]/div[1]/input")).getAttribute("value");
         Assertions.assertEquals(City, currentCityAddress);
         WebElement saveButton1 = driver.findElement(By.xpath("//*[@id=\"content\"]/div/div/form/footer/button"));
@@ -82,8 +82,3 @@ public class AddressAddition {
 
     }
 }
-//*[@id="address-30404"]/div[2]/a[2]/span
-//*[@id="address-30405"]/div[2]/a[2]/span
-//*[@id="blockEmailSubscription_displayFooterBefore"]/div/div/form/div/div[1]/div[1]/input
-// notification
-//*[@id="notifications"]/div/article/ul/li

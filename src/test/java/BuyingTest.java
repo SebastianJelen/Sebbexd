@@ -48,17 +48,8 @@ public class BuyingTest {
         String discount = driver.findElement(By.xpath("//*[@id=\"content\"]/ul/li")).getText();
         ;
         Assertions.assertEquals("-20%", discount);
-        WebElement sizeChoice = driver.findElement(By.xpath("//*[@id=\"group_1\"]"));
-        sizeChoice.sendKeys("M");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"add-to-cart-or-refresh\"]/div[2]/div/div[2]/button")));
-        driver.findElement(By.xpath("//*[@id=\"add-to-cart-or-refresh\"]/div[2]/div/div[2]/button")).click();
-        driver.findElement(By.xpath("//*[@id=\"blockcart-modal\"]/div/div/div[2]/div/div[2]/div/div/a/i")).click();
-        WebElement quantity = driver.findElement(By.xpath("/html/body/main/section/div/div/section/div/div[1]/div/div[2]/ul/li/div/div[3]/div/div[2]/div/div[1]/div/input"));
-        WebElement upArrow = driver.findElement(By.xpath("//*[@id=\"main\"]/div/div[1]/div/div[2]/ul/li/div/div[3]/div/div[2]/div/div[1]/div/span[3]/button[1]/i"));
-        quantity.sendKeys("5");
-        quantity.sendKeys(Keys.DELETE);
+        // parametryzacja zamowienia
+        sizeAndQuantity("M", "5");
         driver.findElement(By.xpath("//*[@id=\"main\"]/div/div[2]/div[1]/div[2]/div/a")).click();
 
 
@@ -66,6 +57,7 @@ public class BuyingTest {
 
     @When("User selects all the necessary delivery and paytment options")
     public void userSelectsAllTheNecessaryDeliveryAndPaytmentOptions() {
+        // Klikniecie i wyszukanie wszystkich elementow
         driver.findElement(By.xpath("//*[@id=\"checkout-addresses-step\"]/div/div/form/div[2]/button")).click();
         driver.findElement(By.xpath("/html/body/main/section/div/div/section/div/div[1]/section[3]/div/div[2]/form/button")).click();
         driver.findElement(By.xpath("//*[@id=\"payment-option-1\"]")).click();
@@ -83,7 +75,7 @@ public class BuyingTest {
         String screenshot_name = s + "_" + "screenshot.png";
         // screenshot
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(scrFile, new File("C:\\Users\\Sebek\\WarsztatyZadanie\\Zadanie1\\untitled1\\" + screenshot_name));
+        FileUtils.copyFile(scrFile, new File("C:\\Users\\Sebek\\WarsztatyZadanie\\Zadanie1\\DobreZadanie\\" + screenshot_name));
         String orderCode = driver.findElement(By.xpath("//*[@id=\"order-reference-value\"]")).getText();
         String orderPrice = driver.findElement(By.xpath("//*[@id=\"content-hook_payment_return\"]/div/div/div/ul/li[1]/span/strong")).getText();
         driver.findElement(By.xpath("//*[@id=\"_desktop_user_info\"]/div/a[2]/span")).click();
@@ -96,6 +88,19 @@ public class BuyingTest {
         Assertions.assertTrue(awaitMessage.contains("Awaiting check payment"));
 
 
+    }
+    public void sizeAndQuantity(String size, String quantityOfProducts){
+        WebElement sizeChoice = driver.findElement(By.xpath("//*[@id=\"group_1\"]"));
+        sizeChoice.sendKeys(size);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"add-to-cart-or-refresh\"]/div[2]/div/div[2]/button")));
+        driver.findElement(By.xpath("//*[@id=\"add-to-cart-or-refresh\"]/div[2]/div/div[2]/button")).click();
+        driver.findElement(By.xpath("//*[@id=\"blockcart-modal\"]/div/div/div[2]/div/div[2]/div/div/a/i")).click();
+        WebElement quantity = driver.findElement(By.xpath("/html/body/main/section/div/div/section/div/div[1]/div/div[2]/ul/li/div/div[3]/div/div[2]/div/div[1]/div/input"));
+        WebElement upArrow = driver.findElement(By.xpath("//*[@id=\"main\"]/div/div[1]/div/div[2]/ul/li/div/div[3]/div/div[2]/div/div[1]/div/span[3]/button[1]/i"));
+        quantity.sendKeys(quantityOfProducts);
+        quantity.sendKeys(Keys.DELETE);
     }
 }
 
