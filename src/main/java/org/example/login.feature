@@ -4,9 +4,9 @@ Feature: Login in:
     Given browser on logging in page
     When User logs in
     Then User is on address site
-    Then He fills in <Address>, <City> and <ZipPostalCode>
-    And User is on the addresses page and close browser
+    Then He fills in <Address>, <City>, <ZipPostalCode>, <Alias>, <Country> and <Phone>
+    And User is on the addresses page and closes browser
 
     Examples:
-    |Address|City|ZipPostalCode|
-    |Markowska|Warszawa|32150  |
+    |Address|City|ZipPostalCode|Alias|Country|Phone|
+    |Markowska|Warszawa|32150  |Eric |United |123-456-789|

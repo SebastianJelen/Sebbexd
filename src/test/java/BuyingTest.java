@@ -9,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
 import java.text.Format;
@@ -24,6 +25,7 @@ public class BuyingTest {
 
     @Given("browser on loggin in page")
     public void browserOnLoggingInPage() {
+        // wejscie na strone logowania
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get("https://mystore-testlab.coderslab.pl/index.php?controller=authentication&back=my-account");
@@ -32,13 +34,8 @@ public class BuyingTest {
     @When("user logs in and goes to the clothes section")
     public void userLogsIn() {
 
+        //logowanie i wejscie w cloth sekcje
         logger.loggingIn(driver);
-//        WebElement emailBracket = driver.findElement(By.xpath("//*[@id=\"field-email\"]"));
-//        emailBracket.sendKeys("sesixag720@kaftee.com");
-//        WebElement passwordBracket = driver.findElement(By.xpath("//*[@id=\"field-password\"]"));
-//        passwordBracket.sendKeys("qwerty");
-//        WebElement signIn = driver.findElement(By.cssSelector("#submit-login"));
-//        signIn.click();
         WebElement clothesButton = driver.findElement(By.xpath("//*[@id=\"category-3\"]/a"));
         clothesButton.click();
     }
@@ -59,25 +56,10 @@ public class BuyingTest {
         driver.findElement(By.xpath("//*[@id=\"add-to-cart-or-refresh\"]/div[2]/div/div[2]/button")).click();
         driver.findElement(By.xpath("//*[@id=\"blockcart-modal\"]/div/div/div[2]/div/div[2]/div/div/a/i")).click();
         WebElement quantity = driver.findElement(By.xpath("/html/body/main/section/div/div/section/div/div[1]/div/div[2]/ul/li/div/div[3]/div/div[2]/div/div[1]/div/input"));
+        WebElement upArrow = driver.findElement(By.xpath("//*[@id=\"main\"]/div/div[1]/div/div[2]/ul/li/div/div[3]/div/div[2]/div/div[1]/div/span[3]/button[1]/i"));
         quantity.sendKeys("5");
         quantity.sendKeys(Keys.DELETE);
         driver.findElement(By.xpath("//*[@id=\"main\"]/div/div[2]/div[1]/div[2]/div/a")).click();
-
-
-        //*[@id="js-delivery"]/button
-
-
-
-
-
-
-//        WebElement proceedToCheckoutButton = driver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div[2]/div/div/a"));
-//        proceedToCheckoutButton.submit();
-//        WebElement proceedToCheckoutButton2 = driver.findElement(By.xpath("//*[@id=\"main\"]/div/div[2]/div[1]/div[2]/div/a"));
-//        proceedToCheckoutButton2.submit();
-//        WebElement continueButton = driver.findElement(By.xpath("//*[@id=\"checkout-addresses-step\"]/div/div/form/div[2]/button"));
-//        continueButton.click();
-
 
 
     }
@@ -93,11 +75,14 @@ public class BuyingTest {
 
     @And("User sees order confirmation")
     public void userSeesOrderConfirmation() throws IOException {
+
+        //generowanie daty dla screenshota
         Date date = new Date();
         Format formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         String s = formatter.format(date);
         String screenshot_name = s + "_" + "screenshot.png";
-        File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        // screenshot
+        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(scrFile, new File("C:\\Users\\Sebek\\WarsztatyZadanie\\Zadanie1\\untitled1\\" + screenshot_name));
         String orderCode = driver.findElement(By.xpath("//*[@id=\"order-reference-value\"]")).getText();
         String orderPrice = driver.findElement(By.xpath("//*[@id=\"content-hook_payment_return\"]/div/div/div/ul/li[1]/span/strong")).getText();
@@ -105,12 +90,14 @@ public class BuyingTest {
         driver.findElement(By.xpath("//*[@id=\"history-link\"]/span/i")).click();
         String orderCodeHistory = driver.findElement(By.xpath("//*[@id=\"content\"]/table/tbody/tr[1]/th")).getText();
         String orderPriceHistory = driver.findElement(By.xpath("//*[@id=\"content\"]/table/tbody/tr[1]/td[2]")).getText();
+        // sprawdzenie zgodnosci zamowienia
         Assertions.assertEquals(orderPrice, orderPriceHistory);
         String awaitMessage = driver.findElement(By.xpath("//*[@id=\"content\"]/div/div[1]/div/div[1]/div[3]/span")).getAttribute("innerText");
         Assertions.assertTrue(awaitMessage.contains("Awaiting check payment"));
 
 
     }
-
-
 }
+
+
+
